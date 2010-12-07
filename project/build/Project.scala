@@ -3,6 +3,14 @@
 import sbt._
 
 class LiftProject(info: ProjectInfo) extends DefaultWebProject(info) {
+  val dispatch = "net.databinder" %% "dispatch-http" % "0.7.7"
+  val dispatchJson = "net.databinder" %% "dispatch-http-json" % "0.7.7"
+
+  val logback = "ch.qos.logback" % "logback-classic" % "0.9.26"
+
+  // Using JRebel for development
+  override def scanDirectories = Nil
+
   val mavenLocal = "Local Maven Repository" at
   "file://"+Path.userHome+"/.m2/repository"
 
