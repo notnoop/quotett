@@ -11,7 +11,9 @@ import _root_.net.liftweb.mapper.{Schemifier, DB, StandardDBVendor, DefaultConne
 import _root_.net.liftweb.util.{Props}
 import _root_.net.liftweb.common.{Full}
 import _root_.net.liftweb.http.{S}
+
 import com.notnoop.quotett.model._
+import com.notnoop.quotett.lib._
 
 
 class Boot {
@@ -39,12 +41,12 @@ class Boot {
     LiftRules.addToPackages("com.notnoop.quotett")
 
     // build sitemap
-    val entries = List(Menu("Home") / "index") :::
-                  List(Menu("ViewCitation") / "citation/view") :::
-                  List(Menu(Loc("Static", Link(List("static"), true, "/static/index"),
-                       "Static Content"))) :::
+    val entries = Menu("Home") / "index" ::
+//                  Menu(Loc("Static", Link(List("static"), true, "/static/index"),
+//                       "Static Content")) ::
                   // the User management menu items
-                  User.sitemap :::
+                  Menu(CitationsLoc) ::
+//                  User.sitemap :::
                   Nil
 
 

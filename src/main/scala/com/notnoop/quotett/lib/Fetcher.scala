@@ -3,6 +3,8 @@ package com.notnoop.quotett.lib
 import dispatch._
 import Http._
 
+import scala.xml.PrettyPrinter
+
 class Fetcher {
 
   def contentOf(url: String) = {
@@ -14,10 +16,9 @@ class Fetcher {
   def textOf(url: String) = {
     val http = new Http
     val req = :/("viewtext.org") / "api" / "text"
-    val rquery = req <<? Map("url" -> url, "format" -> "json",
+    val rquery = req <<? Map("url" -> url, "format" -> "xml",
       "rl" -> "false")
 
-    import json.JsHttp._
-    http(rquery ># { 'content ! str })
+    new PrettyPrinter(1000, 4).formatNodes(http(rquery <> { _ \ "Content"} ))
   }
 }

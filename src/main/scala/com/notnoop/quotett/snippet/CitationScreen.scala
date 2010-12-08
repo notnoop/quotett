@@ -21,12 +21,13 @@ object CitationScreen extends LiftScreen {
     //citation.save
     try {
       citation.htmlSource(fetcher.contentOf(citation.sourceURL))
-      //citation.strippedSource(fetcher.textOf(citation.sourceURL))
+      citation.strippedSource(fetcher.textOf(citation.sourceURL))
     } catch {
       case _ => S.error("Couldn't fetch url")
       return
     }
 
+    citation.is.save
     S.notice("Citation is saved")
   }
 }
