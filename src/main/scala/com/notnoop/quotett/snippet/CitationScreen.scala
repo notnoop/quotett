@@ -20,5 +20,4 @@ object CitationScreen extends LiftScreen {
     //citation.save
     S.notice("Citation is saved")
   }
-
 }

@@ -10,6 +10,8 @@ import _root_.net.liftweb.common._
 
 import _root_.net.liftweb.http.S
 
+import com.notnoop.quotett.lib.Validations
+
 class Citation extends LongKeyedMapper[Citation] with IdPK {
 
   def getSingleton = Citation
@@ -18,7 +20,10 @@ class Citation extends LongKeyedMapper[Citation] with IdPK {
     override def displayName = S ? "Source URL"
     override def required_? = true
 
-    override def validations = valMinLen(1, "Required") _ :: super.validations
+    override def validations =
+      valMinLen(1, "Required") _ ::
+      Validations.valHttpURL(this) ::
+      super.validations
   }
 
   object quotation extends MappedTextarea(this, 1000) {
@@ -34,5 +39,5 @@ class Citation extends LongKeyedMapper[Citation] with IdPK {
 }
 
 object Citation extends Citation with LongKeyedMetaMapper[Citation] {
-  override def formFields(c: Citation) = c.sourceURL :: c.quotation :: Nil
+  override def formFields(c: Citation) = c.quotation :: c.sourceURL :: Nil
 }
