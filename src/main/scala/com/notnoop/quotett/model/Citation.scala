@@ -17,12 +17,15 @@ class Citation extends LongKeyedMapper[Citation] with IdPK {
   object sourceURL extends MappedString(this, 255) {
     override def displayName = S ? "Source URL"
     override def required_? = true
+
+    override def validations = valMinLen(1, "Required") _ :: super.validations
   }
 
   object quotation extends MappedTextarea(this, 1000) {
     override def displayName = S ? "Cited Text"
 
     override def required_? = true
+    override def validations = valMinLen(1, "Required") _ :: super.validations
   }
 
   // Populated

@@ -15,7 +15,10 @@ object CitationScreen extends LiftScreen {
   _register(() => citation.is)
 
   def finish() {
-    S.notice("Saved")
+    S.notice("Saved with citation: " + citation.quotation)
+
+    //citation.save
+    S.notice("Citation is saved")
   }
 
 }
