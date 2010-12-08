@@ -3,6 +3,7 @@
 package bootstrap.liftweb
 
 import _root_.net.liftweb.http.{LiftRules, NotFoundAsTemplate, ParsePath}
+import _root_.net.liftweb.http._
 import _root_.net.liftweb.sitemap.{SiteMap, Menu, Loc}
 import _root_.net.liftweb.util.{ NamedPF }
 import _root_.net.liftweb.sitemap.Loc._
@@ -39,12 +40,20 @@ class Boot {
 
     // build sitemap
     val entries = List(Menu("Home") / "index") :::
+                  List(Menu("ViewCitation") / "citation/view") :::
                   List(Menu(Loc("Static", Link(List("static"), true, "/static/index"),
                        "Static Content"))) :::
                   // the User management menu items
                   User.sitemap :::
                   Nil
 
+
+    LiftRules.statelessRewrite.prepend(NamedPF("ViewCitation") {
+        case RewriteRequest(
+          ParsePath("citations" :: citationId :: Nil, _, _, _), _, _) =>
+        RewriteResponse("citation/view" :: Nil, Map("citationId" ->
+        citationId))
+    })
     LiftRules.uriNotFound.prepend(NamedPF("404handler"){
       case (req,failure) => NotFoundAsTemplate(
         ParsePath(List("exceptions","404"),"html",false,false))
